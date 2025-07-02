@@ -1,0 +1,132 @@
+import React, { useState } from 'react';
+
+export default function Session5Page() {
+  const [accessCode, setAccessCode] = useState('');
+  const [granted, setGranted] = useState(false);
+  const CORRECT_CODE = process.env.REACT_APP_SESSION5_CODE || 'SESSION5';
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (accessCode === CORRECT_CODE) {
+      setGranted(true);
+    } else {
+      alert('Invalid access code. Please check and try again.');
+      setAccessCode('');
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6">
+      <header className="w-full max-w-4xl mb-8">
+        <h1 className="text-4xl font-extrabold text-gray-800">Session 5</h1>
+        <p className="text-lg text-gray-600">OS Requirements & BIOS/UEFI Boot Process</p>
+      </header>
+
+      {!granted ? (
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white shadow-md rounded-lg p-6 w-full max-w-md"
+        >
+          <h2 className="text-2xl font-semibold mb-4">Enter Access Code</h2>
+          <input
+            type="password"
+            value={accessCode}
+            onChange={(e) => setAccessCode(e.target.value)}
+            placeholder="Access Code"
+            className="w-full p-3 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <button
+            type="submit"
+            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            Unlock Session 5
+          </button>
+          <p className="mt-3 text-gray-500 text-sm">
+            Please enter the code provided in WhatsApp to access today's live lesson.
+          </p>
+        </form>
+      ) : (
+        <main className="w-full max-w-4xl bg-white shadow rounded-lg p-8">
+          <section className="mb-8">
+            <h2 className="text-2xl font-bold mb-2">Lesson Overview</h2>
+            <p className="text-gray-700">
+              In this session, you'll learn about system requirements for modern operating systems,
+              explore BIOS vs UEFI firmware, and configure boot order to prepare for OS installation.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h3 className="text-xl font-semibold mb-2">Key Definitions</h3>
+            <dl className="space-y-4">
+              <div>
+                <dt className="font-medium">System Requirements</dt>
+                <dd className="ml-4 text-gray-600">
+                  The minimum hardware and firmware prerequisites that an OS needs to run properly,
+                  including CPU architecture, RAM, storage, TPM, and graphics capabilities.
+                </dd>
+              </div>
+              <div>
+                <dt className="font-medium">BIOS (Basic Input/Output System)</dt>
+                <dd className="ml-4 text-gray-600">
+                  Legacy firmware interface that initializes hardware and starts the bootloader
+                  on older PCs, using a limited interface and 16-bit mode.
+                </dd>
+              </div>
+              <div>
+                <dt className="font-medium">UEFI (Unified Extensible Firmware Interface)</dt>
+                <dd className="ml-4 text-gray-600">
+                  Modern firmware standard replacing BIOS, offering features like Secure Boot,
+                  GPT partition support, and a graphical interface in 32/64-bit mode.
+                </dd>
+              </div>
+            </dl>
+          </section>
+
+          <section className="mb-8">
+            <h3 className="text-xl font-semibold mb-2">Session Content</h3>
+            <ol className="list-decimal list-inside text-gray-700 space-y-2">
+              <li>
+                <strong>OS Requirements:</strong> Review Windows 10 & 11 specs (CPU, RAM,
+                storage, TPM 2.0, Secure Boot).
+              </li>
+              <li>
+                <strong>Firmware Boot Sequence:</strong> Diagram POST → Firmware → Bootloader → OS.
+              </li>
+              <li>
+                <strong>BIOS vs UEFI:</strong> Hands-on demo entering firmware settings, comparing
+                interfaces and modes.
+              </li>
+              <li>
+                <strong>Boot Order Setup:</strong> Change boot priority to USB/DVD, enable/disable
+                Secure Boot.
+              </li>
+            </ol>
+          </section>
+
+          <section>
+            <h3 className="text-xl font-semibold mb-2">Resources & Next Steps</h3>
+            <ul className="list-disc list-inside text-blue-600 space-y-1">
+              <li>
+                <a href="https://docs.microsoft.com/windows-hardware/design/device-experiences/oem-secure-boot"
+                   target="_blank" rel="noopener noreferrer"
+                   className="underline">
+                  Official Secure Boot Documentation
+                </a>
+              </li>
+              <li>
+                <a href="#" className="underline">
+                  Download Windows 10/11 ISO
+                </a>
+              </li>
+              <li>
+                <a href="#" className="underline">
+                  Diagram: Firmware Boot Sequence (PDF)
+                </a>
+              </li>
+            </ul>
+          </section>
+        </main>
+      )}
+    </div>
+  );
+}
